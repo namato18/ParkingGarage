@@ -27,10 +27,48 @@ function selectFloor(car, floor) {
 
             // Add 'selected' class to the clicked button
             selectedButton.classList.add('selected');
+
+             // Show success popup message
+             showPopupMessage(`Floor ${floor} selected for ${car}`);
         })
         .catch(error => {
             console.error('Error writing to Firebase', error);
         });
+}
+
+// Function to show a popup message similar to an iPhone notification
+function showPopupMessage(message) {
+    // Create a div for the popup
+    const popup = document.createElement('div');
+    popup.innerText = message;
+    
+    // Popup styling to resemble iPhone notification
+    popup.style.position = 'fixed';
+    popup.style.top = '20px'; // At the top of the screen
+    popup.style.left = '50%';
+    popup.style.transform = 'translateX(-50%)';
+    popup.style.backgroundColor = '#333333'; // Dark background
+    popup.style.color = '#ffffff'; // White text
+    popup.style.padding = '15px 20px';
+    popup.style.borderRadius = '15px'; // Rounded corners like an iPhone notification
+    popup.style.boxShadow = '0px 4px 10px rgba(0, 0, 0, 0.2)';
+    popup.style.fontSize = '16px';
+    popup.style.zIndex = '1000';
+    popup.style.transition = 'opacity 0.5s ease';
+
+    // Start popup visible
+    popup.style.opacity = '1';
+
+    // Append the popup to the body
+    document.body.appendChild(popup);
+
+    // After 2 seconds, fade out and remove the popup
+    setTimeout(() => {
+        popup.style.opacity = '0'; // Fade out effect
+        setTimeout(() => {
+            popup.remove(); // Remove from DOM after fade out
+        }, 500); // Allow fade out to complete before removal
+    }, 2000); // Show for 2 seconds
 }
 
 // Add event listeners for buttons
